@@ -73,14 +73,21 @@ select {
   outline: none;
 }
 
-button#filter-btn {
+button#filter-btn, button#reset-btn {
   background-color: #485563;
   position: relative;
   left: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 110px;
 }
 
 form {
   padding-bottom: 10px;
+}
+
+.form-group, .list-group {
+  margin-bottom: 0;
 }
 
 #table-area th {

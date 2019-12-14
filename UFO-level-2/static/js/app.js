@@ -20,8 +20,9 @@ shape.html("");
 // Select the output element
 var output = d3.select("#ufo-table>tbody");
 
-// Select the button
+// Select the buttons
 var button = d3.select("#filter-btn");
+var reset = d3.select("#reset-btn");
 
 
 // Set select options to most current
@@ -89,6 +90,7 @@ function filterSightings() {
     var countryFilter = country.property("value");
     var shapeFilter = shape.property("value");
 
+    // All filters in one object
     var allFilters = {
         "datetime": dateFilter, 
         "city": cityFilter, 
@@ -97,13 +99,14 @@ function filterSightings() {
         "shape": shapeFilter
     };
 
+    // Default results will include all data
     var results = allSightings;
 
     // 3. Filter data based on user input
     if ((!dateFilter) && (!cityFilter) && (!stateFilter) && (!countryFilter) && (!shapeFilter)) {
-        // If no filters, then list all
+        // 3a. If no filters, then list all
     } else {
-        // If one or more filters, then go through each filter
+        // 3b. If one or more filters, then go through each filter
         Object.entries(allFilters).forEach(([key, value]) => {
             if (value) {
                 results = results.filter(sighting => sighting[key] === value);
@@ -130,7 +133,8 @@ function filterSightings() {
 
 };
 
-// Bind button to eventhandler
+// Bind filter button to eventhandler
 button.on("click", filterSightings);
 
-
+// Reset button clears output
+reset.on("click", function() {output.html("")});
