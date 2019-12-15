@@ -104,14 +104,27 @@ function filterSightings() {
 
     // 3. Filter data based on user input
     if ((!dateFilter) && (!cityFilter) && (!stateFilter) && (!countryFilter) && (!shapeFilter)) {
-        // 3a. If no filters, then list all
+        // If no filters, then list all
     } else {
-        // 3b. If one or more filters, then go through each filter
-        Object.entries(allFilters).forEach(([key, value]) => {
-            if (value) {
-                results = results.filter(sighting => sighting[key] === value);
-            };
-        });
+        // If one or more filters
+
+        // Check datetime format of input is either m/d/yyy or mm/dd/yyy
+        var date2Object = d3.timeParse("%m/%d/%Y");
+        var dateObject = date2Object(dateFilter);
+
+        if (typeof dateObject === null) {
+            allFilters.datetime = "";
+        } else {
+            var object2Date = d3.timeFormat("%-m/%-d/%Y");
+            allFilters.datetime = object2Date(dateObject);    
+        
+        // Go through all filters
+            Object.entries(allFilters).forEach(([key, value]) => {
+                if (value) {
+                    results = results.filter(sighting => sighting[key] === value);
+                };
+            });
+        };
     };
 
     // 4. Check for results
@@ -136,5 +149,12 @@ function filterSightings() {
 // Bind filter button to eventhandler
 button.on("click", filterSightings);
 
-// Reset button clears output
-reset.on("click", function() {output.html("")});
+// Reset button
+reset.on("click", function() {
+    output.html("");
+    datetime.property("value", "");
+    cityFilter = city.property("value", "");
+    stateFilter = state.property("value", "");
+    countryFilter = country.property("value", "");
+    shapeFilter = shape.property("value", "");
+});
