@@ -153,8 +153,8 @@ button.on("click", filterSightings);
 reset.on("click", function() {
     output.html("");
     datetime.property("value", "");
-    cityFilter = city.property("value", "");
-    stateFilter = state.property("value", "");
-    countryFilter = country.property("value", "");
-    shapeFilter = shape.property("value", "");
+    city.property("value", "");
+    state.property("value", "");
+    country.property("value", "");
+    shape.property("value", "");
 });
